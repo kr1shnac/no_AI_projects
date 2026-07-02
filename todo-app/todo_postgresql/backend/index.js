@@ -12,36 +12,36 @@ app.use(cors({
     origin: "http://localhost:5173"
 }))
 
-const user = []
-const todos = []
-
-app.post("/signup", (req, res) => {
+app.post("/signup", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const userExist = user.find(u => u.username === username)
+    const userExist = await pool.query(`
+            SELECT * FROM users WHERE username = $1
+        `, [username])
 
-    if(userExist) {
+    if(userExist.rows.length > 0) {
         return res.json("username already exist");
     }
 
-    user.push({
-        username,
-        password
-    })
+    await pool.query(`
+            INSERT INTO users (username, password) VALUES ($1, $2)
+        `, [username, password])
 
     res.json({
         message: "user created account"
     })
 })
 
-app.post("/signin", (req, res) => {
+app.post("/signin", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const userExist = user.find(u => u.username === username && u.password === password)
+    const userExist = await pool.query(`
+            SELECT * FROM users WHERE username = $1 AND password = $2
+        `, [username, password])
 
-    if(!userExist) {
+    if(userExist.rows.length === 0) {
        return res.json("Incorrect creditionals")
     }
 
@@ -54,28 +54,40 @@ app.post("/signin", (req, res) => {
     })
 })
 
-app.post("/todos", authMiddleware, (req, res) => {
+app.post("/todos", authMiddleware, async (req, res) => {
     const username = req.username
-
     const todo = req.body.todo;
 
-    todos.push({
-        todo,
-        username
-    })
+    const userResults = await pool.query(`
+            SELECT id FROM users WHERE username = $1
+        `, [username])
+
+    const userId = userResults.rows[0].id;
+
+    await pool.query(`
+            INSERT INTO todos (todo, user_id) VALUES ($1, $2)
+        `, [todo, userId])
 
     res.json({
         message: "todo added"
     })
 })
 
-app.get("/todos", authMiddleware, (req, res) => {
+app.get("/todos", authMiddleware, async (req, res) => {
     const username = req.username
 
-    const userTodos = todos.filter(u => u.username === username);
+    const userResults = await pool.query(`
+            SELECT id FROM users WHERE username = $1
+        `, [username])
+
+    const userId = userResults.rows[0].id;
+
+    const userTodos = await pool.query(`
+            SELECT id, todo FROM todos WHERE user_id = $1 ORDER BY id DESC
+        `, [userId])
 
     res.json({
-        todos: userTodos
+        todos: userTodos.rows
     })
 })
 
