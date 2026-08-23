@@ -28,6 +28,14 @@
 
 ---
 
+### KRISH — Terminal Chatbot
+
+> My first terminal chatbot, built from scratch while learning AI agents and APIs.
+
+**→** **[Explore Repository](https://github.com/kr1shnac/my-first-terminal-chatbot)**
+
+---
+
 ### Todo App
 
 > Full-stack Todo application with In-Memory and PostgreSQL implementations.
