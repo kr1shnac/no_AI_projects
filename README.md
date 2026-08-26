@@ -28,6 +28,14 @@
 
 ---
 
+### KRISH — Terminal Agent
+
+> My first AI coding agent, built from scratch to understand how LLMs, tools, and agent workflows work together.
+
+**→** **[Explore Repository](https://github.com/kr1shnac/my-first-terminal-agent)**
+
+---
+
 ### KRISH — Terminal Chatbot
 
 > My first terminal chatbot, built from scratch while learning AI agents and APIs.
