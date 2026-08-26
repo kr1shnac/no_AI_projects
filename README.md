@@ -20,19 +20,19 @@
 
 ---
 
-### PayTM Clone
-
-> Full-stack digital wallet with authentication and money transfers.
-
-**→** **[Explore Repository](https://github.com/kr1shnac/PayTM)**
-
----
-
 ### KRISH — Terminal Agent
 
 > My first AI coding agent, built from scratch to understand how LLMs, tools, and agent workflows work together.
 
 **→** **[Explore Repository](https://github.com/kr1shnac/my-first-terminal-agent)**
+
+---
+
+### PayTM Clone
+
+> Full-stack digital wallet with authentication and money transfers.
+
+**→** **[Explore Repository](https://github.com/kr1shnac/PayTM)**
 
 ---
 
